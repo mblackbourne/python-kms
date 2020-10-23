@@ -39,6 +39,9 @@ def decrypt_asymmetric(project_id, location_id, key_ring_id, key_id, version_id,
     # Build the key version name.
     key_version_name = client.crypto_key_version_path(project_id, location_id, key_ring_id, key_id, version_id)
 
+    # Deencode the ciphertext
+    ciphertext = base64.b64decode(ciphertext)
+
     # Call the API.
     decrypt_response = client.asymmetric_decrypt(request={'name': key_version_name, 'ciphertext': ciphertext})
     print('Plaintext: {}'.format(decrypt_response.plaintext))

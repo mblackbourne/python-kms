@@ -38,6 +38,9 @@ def decrypt_symmetric(project_id, location_id, key_ring_id, key_id, ciphertext):
     # Build the key name.
     key_name = client.crypto_key_path(project_id, location_id, key_ring_id, key_id)
 
+    # Deencode the ciphertext
+    ciphertext = base64.b64decode(ciphertext)
+
     # Call the API.
     decrypt_response = client.decrypt(request={'name': key_name, 'ciphertext': ciphertext})
     print('Plaintext: {}'.format(decrypt_response.plaintext))
